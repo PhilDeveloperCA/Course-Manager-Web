@@ -1,0 +1,42 @@
+version: '3.0'
+services:
+    redis:
+        image: 'redis:latest'
+    nginx:
+        build:
+            context: './nginx'
+            dockerfile: Dockerfile.dev  
+    postgres:
+        image: postgres
+        volumes:
+          - ./db:/var/lib/postgresql/data
+        ports:
+          - "5432:5432"
+        environment:
+          - POSTGRES_PASSWORD=POSTGRES_PASSWORD
+          - POSTGRES_DB=bookmark_development
+          - POSTGRES_USER=postgres
+    server:
+        build:
+            dockerfile: Dockerfile.dev
+            context: './client'
+        volumes:
+          -  /app/node_modules
+          -  ./server:/app
+        environment:
+          - REDIS_HOST=redis
+          - REDIS_PORT=6379
+          - POSTGRES_HOST=postgres
+          - POSTGRES_PORT=5432
+          - POSTGRES_PASSWORD=POSTGRES_PASSWORD
+          - PG_DATABASE=postgres     
+    client:
+        build:
+            dockerfile: Dockerfile.dev
+            context: './client'
+        volumes:
+          -  /app/node_modules #ignore 
+          -  ./client:/app
+        ports:
+          - "5000:3000"
+     
