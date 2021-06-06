@@ -26,9 +26,9 @@ module.exports.addQuiz = async(req,res,next) => {
 
     try{
         if(!courseid){
-            throw BadRequest('Missing Path Parameter : courseid')
+            throw new BadRequest('Missing Path Parameter : courseid')
         } if(!title){
-            throw BadRequest('Missing Fields : Quiz Title')
+            throw new BadRequest('Missing Fields : Quiz Title')
         }
 
         const new_quiz = await Quiz.create({course_id:courseid, title});

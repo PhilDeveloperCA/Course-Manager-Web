@@ -1,5 +1,14 @@
 const router = require('express').Router();
+const {localSignin , localSignup, googleSignin} = require('../controllers/auth');
 
-router.use('/signin');
+router.post('/signin', localSignin);
 
-router.use('/signup');
+router.post('/signup', localSignup);
+
+router.post('/check', (req,res,next) => {
+    res.json(req.session.user[1]);
+})
+
+router.post('/signin/google', googleSignin);
+
+module.exports = router;
