@@ -2,3 +2,5 @@ db
 server/node_modules
 client/node_modules
 client/.git
+client/.env
+server/.env

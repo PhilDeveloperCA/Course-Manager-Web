@@ -52,6 +52,10 @@ const DeleteCourse = async (req,res,next) => {
 const GetCourses = async (req,res,next) => {
     console.log(req.session.userid);
     const user_id = req.session.userid;
+
+    if(!user_id){
+        res.status(400).json({'poop':'johnson'});
+    }
     try{
         const courses = await Course.findAll({
             where:{
